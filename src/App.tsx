@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { firestore, database } from './firebase';
 
 function App() {
+  // const roomsRef = firestore.collection('rooms');
+
   return (
     <div className="App">
       <header className="App-header">
