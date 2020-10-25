@@ -14,9 +14,6 @@ function App() {
       .onSnapshot(({ docs }) => {
         // @ts-ignore
         setItems(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
-        // docs.forEach(_ => {
-        //   console.log(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })))
-        // })
       });
     return unsubscribe;
   }, []);
