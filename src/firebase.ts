@@ -45,3 +45,4 @@ export const storage = firebase.storage();
 export const EmailAuthProvider = firebase.auth.EmailAuthProvider;
 export const Timestamp = firebase.firestore.Timestamp;
 export const FieldValue = firebase.firestore.FieldValue;
+export const provider = new firebase.auth.GoogleAuthProvider();

@@ -1,12 +1,29 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { firestore, database } from './firebase';
+import { firestore, database, auth, provider } from './firebase';
 import { useState, useEffect } from 'react';
 
 function App() {
   const ref = firestore.collection('routines');
   const [items, setItems] = useState([]);
+
+  const [user, setUser] = useState<any | null>(null);
+
+  useEffect(() => {
+    return auth.onAuthStateChanged(user => {
+      setUser(user);
+    });
+  }, []);
+
+  const login = () => {
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithRedirect(provider);
+  };
+
+  const logout = () => {
+    auth.signOut();
+  };
 
   useEffect(() => {
     if(!ref) return;
@@ -41,6 +58,11 @@ function App() {
         >
           Learn React
         </a>
+        {user ? (
+          <button onClick={logout}>Google Logout</button>
+        ) : (
+          <button onClick={login}>Google Login</button>
+        )}
       </header>
     </div>
   );
