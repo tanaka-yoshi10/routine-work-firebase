@@ -7,6 +7,7 @@ type Props = {
 
 function Routine(props: Props) {
   const { item } = props
+  const dates = ['2/21', '2/22', '2/23', '2/24', '2/25']
 
   return (
     <div>
@@ -14,8 +15,14 @@ function Routine(props: Props) {
       <table>
         <thead>
           <tr>
-            <th>メニュー</th>
-            <th>2/23</th>
+            <th style={{ width: 200 }}>メニュー</th>
+            {
+              dates.map((date, index) => {
+                return (
+                  <th key={index}>{date}</th>
+                )
+              })
+            }
           </tr>
         </thead>
         <tbody>
@@ -24,7 +31,13 @@ function Routine(props: Props) {
                 return (
                   <tr key={index}>
                     <td>{menu}</td>
-                    <td></td>
+                    {
+                      dates.map((date, index) => {
+                        return (
+                          <td key={index}>○</td>
+                        )
+                      })
+                    }
                   </tr>
                 );
               })
