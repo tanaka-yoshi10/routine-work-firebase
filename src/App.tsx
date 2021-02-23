@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { firestore, database, auth, provider } from './firebase';
+import { auth, provider } from './firebase';
 import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 
