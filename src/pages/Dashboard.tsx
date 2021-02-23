@@ -1,6 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { firestore } from "../firebase";
 
+type Props = {
+  item: any;
+};
+
+function Routine(props: Props) {
+  const { item } = props
+
+  return (
+    <div>
+      {item.title}
+      <table>
+        <thead>
+          <tr>
+            <th>メニュー</th>
+            <th>2/23</th>
+          </tr>
+        </thead>
+        <tbody>
+            {
+              item.menus.map((menu: string, index: number) => {
+                return (
+                  <tr key={index}>
+                    <td>{menu}</td>
+                    <td></td>
+                  </tr>
+                );
+              })
+            }
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 export default function Dashboard() {
   const [items, setItems] = useState([]);
 
@@ -17,9 +51,9 @@ export default function Dashboard() {
   return (
     <div>
       {
-        items.map((item) => {
-          // @ts-ignore
-          return (<p key={item.id}>{item.title}</p>);
+        items.map((item: any) => {
+          // return (<p key={item.id}>{item.title}</p>);
+          return (<Routine key={item.id} item={item}/>);
         })
       }
     </div>
