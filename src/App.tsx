@@ -28,7 +28,7 @@ function App() {
         {user ? (
           <div>
             <button onClick={logout}>Google Logout</button>
-            <Dashboard/>
+            <Dashboard user={user}/>
           </div>
         ) : (
           <button onClick={login}>Google Login</button>
