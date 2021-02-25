@@ -23,17 +23,19 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="">
+      <header className="">
         {user ? (
           <div>
             <button onClick={logout}>Google Logout</button>
-            <Dashboard user={user}/>
           </div>
         ) : (
           <button onClick={login}>Google Login</button>
         )}
       </header>
+      <div className="container">
+        {user ? (<Dashboard user={user}/>) : null }
+      </div>
     </div>
   );
 }

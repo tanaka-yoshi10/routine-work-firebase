@@ -35,7 +35,7 @@ function Routine(props: Props) {
   return (
     <div>
       {item.title}
-      <table>
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th style={{ width: 200 }}>メニュー</th>
