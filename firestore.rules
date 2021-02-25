@@ -1,8 +1,24 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    function isFamily() {
+      return request.auth.token.email.matches('xxxxx@gmail.com');
+    }
+
     match /{document=**} {
       allow read, write: if false;
+    }
+
+    match /routines/{routineId} {
+      allow read, write: if isLoggedIn() && isFamily();
+    }
+
+    match /histories/{routineId} {
+      allow read, write: if isLoggedIn() && isFamily();
     }
   }
 }
