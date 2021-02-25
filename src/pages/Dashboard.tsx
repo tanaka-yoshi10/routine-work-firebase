@@ -30,7 +30,6 @@ function Routine(props: Props) {
       });
     return unsubscribe;
   }, []);
-  console.log(items)
 
   return (
     <div>
@@ -58,7 +57,6 @@ function Routine(props: Props) {
                       dates.map((date, index) => {
                         const mark = items.some((history:any) => {
                           const doneAt:any = history.doneAt;
-                          console.log(doneAt.toDate())
                           // const done = fromJSDate(doneAt)
                           // return date <= done && done <= date.endOf('day')
                           if (menu !== history.menu) {
