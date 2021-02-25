@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../firebase";
+import { firestore, Timestamp } from "../firebase";
 import { DateTime } from 'luxon';
 
 type Props = {
@@ -19,10 +19,8 @@ function Routine(props: Props) {
       .where("routineId", "==", item.id)
       .where("uid", "==", user.uid)
       .orderBy('doneAt', 'desc')
-      // .orderBy('doneAt', 'asc')
-      // .startAt(new Date('December 1, 2020'))
-      // .endAt(new Date('December 10, 2020'));
-      // TODO: 期間で絞り込みたい
+      .startAt(Timestamp.fromDate(dates[dates.length - 1].toJSDate()))
+      .endAt(Timestamp.fromDate(dates[0].toJSDate()));
     const unsubscribe = ref
       .onSnapshot(({ docs }) => {
         // @ts-ignore
