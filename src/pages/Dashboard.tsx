@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { firestore, Timestamp } from "../firebase";
 import { DateTime } from 'luxon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   item: any;
@@ -63,7 +65,9 @@ function Routine(props: Props) {
                           return date.toJSDate() <= doneAt.toDate() && doneAt.toDate() <= date.endOf('day').toJSDate()
                         })
                         return (
-                          <td key={index}>{mark ? '○' : ''}</td>
+                          <td key={index}>{
+                            mark ? (<FontAwesomeIcon icon={faCheck} />) : ''
+                          }</td>
                         )
                       })
                     }
