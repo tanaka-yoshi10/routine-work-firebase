@@ -11,7 +11,7 @@ type Props = {
 
 function Routine(props: Props) {
   const { item, user } = props;
-  const today = DateTime.local()
+  const today = DateTime.local().startOf('day')
   const dates = [...Array(7)].map((_, i) => today.plus({ days: i - 3 }).startOf('day'))
 
   const [items, setItems] = useState([]);
@@ -40,8 +40,9 @@ function Routine(props: Props) {
             <th style={{ width: 200 }}>メニュー</th>
             {
               dates.map((date, index) => {
+                const style = date.toSeconds() === today.toSeconds() ? { background: 'gray' } : {}
                 return (
-                  <th key={index}>{date.toFormat('MM/dd')}</th>
+                  <th key={index} style={style}>{date.toFormat('MM/dd')}</th>
                 )
               })
             }
@@ -64,8 +65,9 @@ function Routine(props: Props) {
                           }
                           return date.toJSDate() <= doneAt.toDate() && doneAt.toDate() <= date.endOf('day').toJSDate()
                         })
+                        const style = date.toSeconds() === today.toSeconds() ? { background: 'gray' } : {}
                         return (
-                          <td key={index}>{
+                          <td key={index} style={style}>{
                             mark ? (<FontAwesomeIcon icon={faCheck} />) : ''
                           }</td>
                         )
