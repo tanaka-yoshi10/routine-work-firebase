@@ -5,20 +5,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
-  item: any;
+  routine: any;
   user: any;
 };
 
 function Routine(props: Props) {
-  const { item, user } = props;
+  const { routine, user } = props;
   const today = DateTime.local().startOf('day')
   const dates = [...Array(7)].map((_, i) => today.plus({ days: i - 3 }).startOf('day'))
 
-  const [items, setItems] = useState([]);
+  const [hitories, setHistories] = useState([]);
+
+  const onClick = (date: any, menu: string, isToday: boolean, mark: boolean) => {
+    if (!isToday) {
+      return
+    }
+    if (mark) {
+      return
+    }
+    const ref = firestore.collection('histories')
+    ref.add({
+      menu,
+      routineId: routine.id,
+      doneAt: new Date(),
+      createdAt: new Date(),
+      uid: user.uid ,
+    });
+  };
 
   useEffect(() => {
     const ref = firestore.collection('histories')
-      .where("routineId", "==", item.id)
+      .where("routineId", "==", routine.id)
       .where("uid", "==", user.uid)
       .orderBy('doneAt', 'desc')
       .startAt(Timestamp.fromDate(dates[dates.length - 1].toJSDate()))
@@ -26,14 +43,14 @@ function Routine(props: Props) {
     const unsubscribe = ref
       .onSnapshot(({ docs }) => {
         // @ts-ignore
-        setItems(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
+        setHistories(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
       });
     return unsubscribe;
   }, []);
 
   return (
     <div>
-      {item.title}
+      {routine.title}
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -50,13 +67,13 @@ function Routine(props: Props) {
         </thead>
         <tbody>
             {
-              item.menus.map((menu: string, index: number) => {
+              routine.menus.map((menu: string, index: number) => {
                 return (
                   <tr key={index}>
                     <td>{menu}</td>
                     {
                       dates.map((date, index) => {
-                        const mark = items.some((history:any) => {
+                        const mark = hitories.some((history:any) => {
                           const doneAt:any = history.doneAt;
                           // const done = fromJSDate(doneAt)
                           // return date <= done && done <= date.endOf('day')
@@ -66,8 +83,9 @@ function Routine(props: Props) {
                           return date.toJSDate() <= doneAt.toDate() && doneAt.toDate() <= date.endOf('day').toJSDate()
                         })
                         const style = date.toSeconds() === today.toSeconds() ? { background: 'gray' } : {}
+                        const isToday = date.toSeconds() === today.toSeconds();
                         return (
-                          <td key={index} style={style}>{
+                          <td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
                             mark ? (<FontAwesomeIcon icon={faCheck} />) : ''
                           }</td>
                         )
@@ -85,14 +103,14 @@ function Routine(props: Props) {
 
 export default function Dashboard(props: any) {
   const { user } = props
-  const [items, setItems] = useState([]);
+  const [routines, setRoutines] = useState([]);
 
   useEffect(() => {
     const ref = firestore.collection('routines');
     const unsubscribe = ref
       .onSnapshot(({ docs }) => {
         // @ts-ignore
-        setItems(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
+        setRoutines(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
       });
     return unsubscribe;
   }, []);
@@ -100,9 +118,8 @@ export default function Dashboard(props: any) {
   return (
     <div>
       {
-        items.map((item: any) => {
-          // return (<p key={item.id}>{item.title}</p>);
-          return (<Routine key={item.id} item={item} user={user}/>);
+        routines.map((routine: any) => {
+          return (<Routine key={routine.id} routine={routine} user={user}/>);
         })
       }
     </div>
