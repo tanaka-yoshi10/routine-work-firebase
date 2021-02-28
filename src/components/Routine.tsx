@@ -1,12 +1,12 @@
 import {DateTime} from "luxon";
 import React, {useEffect, useState} from "react";
-import {firestore, Timestamp} from "../firebase";
+import { firestore, Timestamp, User } from "../firebase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   routine: any;
-  user: any;
+  user: User;
 };
 
 export default function Routine(props: Props) {
@@ -14,7 +14,7 @@ export default function Routine(props: Props) {
   const today = DateTime.local().startOf('day')
   const dates = [...Array(7)].map((_, i) => today.plus({ days: i - 3 }).startOf('day'))
 
-  const [hitories, setHistories] = useState([]);
+  const [histories, setHistories] = useState([]);
 
   const onClick = (date: any, menu: string, isToday: boolean, mark: boolean) => {
     if (!isToday) {
@@ -73,7 +73,7 @@ export default function Routine(props: Props) {
                 <td>{menu}</td>
                 {
                   dates.map((date, index) => {
-                    const mark = hitories.some((history:any) => {
+                    const mark = histories.some((history:any) => {
                       const doneAt:any = history.doneAt;
                       // const done = fromJSDate(doneAt)
                       // return date <= done && done <= date.endOf('day')

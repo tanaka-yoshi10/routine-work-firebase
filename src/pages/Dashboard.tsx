@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../firebase";
+import { firestore, User } from "../firebase";
 import Routine from '../components/Routine';
 
 type Props = {
-  user: any;
+  user: User;
 };
 
 export default function Dashboard(props: Props) {
