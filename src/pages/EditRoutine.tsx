@@ -8,9 +8,27 @@ export const EditRoutine: React.FC = () => {
   const { routineId }: any = useParams();
   const routineRef = firestore.collection('routines').doc(routineId);
   const routine = useDocumentSubscription(routineRef);
-  const { menus }:any = routine || {};
+  const { menus }:any = routine || { menus: [] };
 
-  return <span>{ menus }</span>;
-};
+
+  const onClickAdd = (menu: string) => {
+    menus.push(menu)
+    routineRef.update({ menus });
+  }
+
+  return (
+    <div>
+      {
+        menus.map((menu:string, index:number) => {
+          return (
+            <div key={index}>
+              {menu}
+            </div>
+          )
+        })
+      }
+      <button onClick={() => onClickAdd('hoge')}>追加</button>
+    </div>
+  )};
 
 export default EditRoutine;
