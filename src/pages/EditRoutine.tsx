@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { firestore, User } from "../firebase";
+import React, { useRef, useCallback } from "react";
+import { firestore } from "../firebase";
 
 import { Link, useParams } from "react-router-dom";
 import useDocumentSubscription from "../hooks/useDocumentSubscription";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp, faArrowDown, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 export const EditRoutine: React.FC = () => {
   const inputEl = useRef<HTMLInputElement>(null);
@@ -48,10 +50,16 @@ export const EditRoutine: React.FC = () => {
         menus.map((menu:string, index:number) => {
           return (
             <div key={index}>
+              <button className="btn" onClick={() => upMenu(index)}>
+                <FontAwesomeIcon icon={faArrowUp} />
+              </button>
+              <button className="btn" onClick={() => downMenu(index)}>
+                <FontAwesomeIcon icon={faArrowDown} />
+              </button>
               {menu}
-              <button onClick={() => deleteMenu(menu)}>削除</button>
-              <button onClick={() => upMenu(index)}>上</button>
-              <button onClick={() => downMenu(index)}>下</button>
+              <button className="btn" onClick={() => deleteMenu(menu)}>
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </button>
             </div>
           )
         })

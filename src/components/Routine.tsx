@@ -1,8 +1,8 @@
 import {DateTime} from "luxon";
 import React, {useEffect, useState} from "react";
 import { firestore, Timestamp, User } from "../firebase";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 type Props = {
