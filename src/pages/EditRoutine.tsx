@@ -22,6 +22,10 @@ export const EditRoutine: React.FC = () => {
   },[menus])
 
   const deleteMenu = (menu: string) => {
+    if (!window.confirm('Are you sure?')) {
+      return;
+    }
+
     const shifted = menus.filter((value:string) => value !== menu);
     routineRef.update({ menus: shifted });
   }
