@@ -24,6 +24,24 @@ export const EditRoutine: React.FC = () => {
     routineRef.update({ menus: shifted });
   }
 
+  const upMenu = (index: number) => {
+    if (index === 0) {
+      return
+    }
+    const newMenus = [...menus]
+    newMenus.splice(index - 1, 2, newMenus[index], newMenus[index - 1])
+    routineRef.update({ menus: newMenus });
+  }
+
+  const downMenu = (index: number) => {
+    if (index === menus.length - 1) {
+      return
+    }
+    const newMenus = [...menus]
+    newMenus.splice(index, 2, newMenus[index + 1], newMenus[index])
+    routineRef.update({ menus: newMenus });
+  }
+
   return (
     <div>
       {
@@ -32,6 +50,8 @@ export const EditRoutine: React.FC = () => {
             <div key={index}>
               {menu}
               <button onClick={() => deleteMenu(menu)}>削除</button>
+              <button onClick={() => upMenu(index)}>上</button>
+              <button onClick={() => downMenu(index)}>下</button>
             </div>
           )
         })
