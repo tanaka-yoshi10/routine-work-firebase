@@ -19,6 +19,11 @@ export const EditRoutine: React.FC = () => {
     }
   },[menus])
 
+  const deleteMenu = (menu: string) => {
+    const shifted = menus.filter((value:string) => value !== menu);
+    routineRef.update({ menus: shifted });
+  }
+
   return (
     <div>
       {
@@ -26,6 +31,7 @@ export const EditRoutine: React.FC = () => {
           return (
             <div key={index}>
               {menu}
+              <button onClick={() => deleteMenu(menu)}>削除</button>
             </div>
           )
         })
