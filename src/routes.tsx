@@ -6,7 +6,7 @@ import EditRoutine from './pages/EditRoutine';
 
 export const Path = {
   app: '/',
-  edit: '/routines/:routineId',
+  edit: '/routines/:routineId/edit',
 };
 
 const routes = (

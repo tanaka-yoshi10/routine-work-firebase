@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { firestore, User } from "../firebase";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useDocumentSubscription from "../hooks/useDocumentSubscription";
 
 export const EditRoutine: React.FC = () => {
@@ -58,6 +58,9 @@ export const EditRoutine: React.FC = () => {
       }
       <input ref={inputEl} type="text" />
       <button onClick={handleClick}>追加</button>
+      <div className="my-2">
+        <Link className="btn btn-secondary" to="/">Back</Link>
+      </div>
     </div>
   )};
 

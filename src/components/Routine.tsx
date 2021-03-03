@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import { firestore, Timestamp, User } from "../firebase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 type Props = {
   routine: any;
@@ -50,7 +51,7 @@ export default function Routine(props: Props) {
 
   return (
     <div>
-      {routine.title}
+      <Link to={`/routines/${routine.id}/edit`}>{routine.title}</Link>
       <table className="table table-bordered">
         <thead>
         <tr>
