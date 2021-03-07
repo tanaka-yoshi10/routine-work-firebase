@@ -58,7 +58,7 @@ export default function Routine(props: Props) {
           <th style={{ width: 200 }}>メニュー</th>
           {
             dates.map((date, index) => {
-              const style = date.toSeconds() === today.toSeconds() ? { background: 'gray' } : {}
+              const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
               return (
                 <th key={index} style={style}>{date.toFormat('MM/dd')}</th>
               )
@@ -83,7 +83,7 @@ export default function Routine(props: Props) {
                       }
                       return date.toJSDate() <= doneAt.toDate() && doneAt.toDate() <= date.endOf('day').toJSDate()
                     })
-                    const style = date.toSeconds() === today.toSeconds() ? { background: 'gray' } : {}
+                    const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
                     const isToday = date.toSeconds() === today.toSeconds();
                     return (
                       <td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
