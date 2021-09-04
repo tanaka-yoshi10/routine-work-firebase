@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
-import { auth, provider, User } from "../firebase";
+import { auth, provider } from "../firebase";
+import { signInWithRedirect, User } from 'firebase/auth';
 
 type Props = {
   user: User;
@@ -9,7 +10,7 @@ type Props = {
 export default function Header(props: Props) {
   const { user } = props;
   const login = () => {
-    auth.signInWithRedirect(provider);
+    signInWithRedirect(auth, provider);
   };
 
   const logout = () => {

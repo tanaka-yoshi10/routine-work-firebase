@@ -1,9 +1,11 @@
 import {DateTime} from "luxon";
 import React, {useEffect, useState} from "react";
-import { firestore, Timestamp, User } from "../firebase";
+import { firestore } from "../firebase";
 import { CheckIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { addDoc, collection, endAt, onSnapshot, orderBy, query, startAt, Timestamp, where } from "firebase/firestore";
+import { User } from "firebase/auth";
 
 type Props = {
   routine: any;
@@ -24,8 +26,8 @@ export default function Routine(props: Props) {
     if (mark) {
       return
     }
-    const ref = firestore.collection('histories')
-    ref.add({
+    const ref = collection(firestore, 'histories')
+    addDoc(ref, {
       menu,
       routineId: routine.id,
       doneAt: new Date(),
@@ -35,14 +37,13 @@ export default function Routine(props: Props) {
   };
 
   useEffect(() => {
-    const ref = firestore.collection('histories')
-      .where("routineId", "==", routine.id)
-      .where("uid", "==", user.uid)
-      .orderBy('doneAt', 'desc')
-      .startAt(Timestamp.fromDate(dates[dates.length - 1].toJSDate()))
-      .endAt(Timestamp.fromDate(dates[0].toJSDate()));
-    const unsubscribe = ref
-      .onSnapshot(({ docs }) => {
+    const ref = query(collection(firestore, 'histories'),
+      where("routineId", "==", routine.id),
+      where("uid", "==", user.uid),
+      orderBy('doneAt', 'desc'),
+      startAt(Timestamp.fromDate(dates[dates.length - 1].toJSDate())),
+      endAt(Timestamp.fromDate(dates[0].toJSDate())));
+    const unsubscribe = onSnapshot(ref, ({ docs }) => {
         // @ts-ignore
         setHistories(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
       });

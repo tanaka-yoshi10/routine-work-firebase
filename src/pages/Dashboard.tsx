@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { firestore, User } from "../firebase";
+import { firestore } from "../firebase";
 import Routine from '../components/Routine';
+import { User } from "firebase/auth";
+import { collection, onSnapshot } from "firebase/firestore";
 
 type Props = {
   user: User;
@@ -11,9 +13,8 @@ export default function Dashboard(props: Props) {
   const [routines, setRoutines] = useState<any>([]);
 
   useEffect(() => {
-    const ref = firestore.collection('routines');
-    const unsubscribe = ref
-      .onSnapshot(({ docs }) => {
+    const ref = collection(firestore, 'routines');
+    const unsubscribe = onSnapshot(ref, ({ docs }) => {
         setRoutines(docs.map(_ => ({ id: _.id, ref: _.ref, ..._.data() })));
       });
     return unsubscribe;

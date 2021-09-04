@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useCallback } from "react";
 import { firestore } from "../firebase";
 
 import { Link, useParams } from "react-router-dom";
@@ -6,15 +6,39 @@ import useDocumentSubscription from "../hooks/useDocumentSubscription";
 import { VStack, Heading, } from "@chakra-ui/react";
 import MenuList from '../components/MenuList';
 import AddMenu from '../components/AddMenu';
+import { collection, doc, DocumentReference, updateDoc } from "firebase/firestore";
+
+interface IRoutine {
+  id: string;
+  ref: DocumentReference | null;
+  menus: string[];
+};
+class Routine implements IRoutine {
+  id: string = '';
+  ref: DocumentReference | null = null;
+  menus = [];
+
+  constructor({
+    id = '',
+    ref = null,
+    menus = [],
+  }: Partial<IRoutine>) {
+    Object.assign(this, {
+      id,
+      ref,
+      menus,
+    });
+  }
+}
 
 export const EditRoutine: React.FC = () => {
   const { routineId }: any = useParams();
-  const routineRef = firestore.collection('routines').doc(routineId);
-  const routine = useDocumentSubscription(routineRef);
+  const routineRef = doc(collection(firestore, 'routines'), routineId);
+  const routine = useDocumentSubscription(routineRef, Routine);
   const { menus }:any = routine || { menus: [] };
 
   const addMenu = useCallback((menu: string)=>{
-    routineRef.update({ menus: [...menus, menu] });
+    updateDoc(routineRef, { menus: [...menus, menu] });
   }, [menus])
 
   const deleteMenu = (menu: string) => {
@@ -23,7 +47,7 @@ export const EditRoutine: React.FC = () => {
     }
 
     const shifted = menus.filter((value:string) => value !== menu);
-    routineRef.update({ menus: shifted });
+    updateDoc(routineRef, { menus: shifted });
   }
 
   const upMenu = (index: number) => {
@@ -32,7 +56,7 @@ export const EditRoutine: React.FC = () => {
     }
     const newMenus = [...menus]
     newMenus.splice(index - 1, 2, newMenus[index], newMenus[index - 1])
-    routineRef.update({ menus: newMenus });
+    updateDoc(routineRef, { menus: newMenus });
   }
 
   const downMenu = (index: number) => {
@@ -41,7 +65,7 @@ export const EditRoutine: React.FC = () => {
     }
     const newMenus = [...menus]
     newMenus.splice(index, 2, newMenus[index + 1], newMenus[index])
-    routineRef.update({ menus: newMenus });
+    updateDoc(routineRef, { menus: newMenus });
   }
 
   return (
