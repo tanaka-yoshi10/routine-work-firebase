@@ -1,8 +1,7 @@
 import {DateTime} from "luxon";
 import React, {useEffect, useState} from "react";
 import { firestore, Timestamp, User } from "../firebase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { CheckIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
@@ -77,8 +76,6 @@ export default function Routine(props: Props) {
                   dates.map((date, index) => {
                     const mark = histories.some((history:any) => {
                       const doneAt:any = history.doneAt;
-                      // const done = fromJSDate(doneAt)
-                      // return date <= done && done <= date.endOf('day')
                       if (menu !== history.menu) {
                         return false
                       }
@@ -88,7 +85,7 @@ export default function Routine(props: Props) {
                     const isToday = date.toSeconds() === today.toSeconds();
                     return (
                       <Td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
-                        mark ? (<FontAwesomeIcon icon={faCheck} />) : ''
+                        mark ? (<CheckIcon />) : ''
                       }</Td>
                     )
                   })

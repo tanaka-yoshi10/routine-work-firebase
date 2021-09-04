@@ -1,8 +1,6 @@
 import { VStack, Badge, StackDivider, HStack, IconButton, Spacer, Text } from '@chakra-ui/react'
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 type Props = {
   menus: Array<any>,
@@ -34,12 +32,18 @@ function MenuList(props: Props) {
       {
         menus.map((menu:string, index:number) => (
           <HStack key={index}>
-            <button className="btn" onClick={() => upMenu(index)}>
-              <FontAwesomeIcon icon={faArrowUp} />
-            </button>
-            <button className="btn" onClick={() => downMenu(index)}>
-              <FontAwesomeIcon icon={faArrowDown} />
-            </button>
+            <IconButton
+              aria-label="up menu"
+              icon={<FaArrowUp/>}
+              isRound
+              onClick={() => upMenu(index)}
+            />
+            <IconButton
+              aria-label="down menu"
+              icon={<FaArrowDown/>}
+              isRound
+              onClick={() => downMenu(index)}
+            />
             <Text>{menu}</Text>
             <Spacer />
             <IconButton
