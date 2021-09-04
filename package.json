@@ -37,9 +37,7 @@
     "eject": "react-scripts eject",
     "eslint-fix": "eslint --fix --ext .js,.vue,.ts,.tsx,.jsx src",
     "deploy": "yarn run build && firebase deploy --only hosting"
-
   },
-
   "eslintConfig": {
     "extends": [
       "react-app",
