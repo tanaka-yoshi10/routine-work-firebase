@@ -62,8 +62,7 @@ export const EditRoutine: React.FC = () => {
       >
         Edit Routine
       </Heading>
-      <MenuList/>
-      <AddMenu/>
+      <MenuList menus={menus} deleteMenu={deleteMenu}/>
       <VStack
         divider={<StackDivider />}
         borderColor="gray.100"
@@ -85,22 +84,23 @@ export const EditRoutine: React.FC = () => {
               </button>
               <Text>{menu}</Text>
               <Spacer />
-              <IconButton aria-label="delete menu" icon={<FaTrashAlt/>} isRound />
-              <Button className="btn" onClick={() => deleteMenu(menu)}>
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </Button>
+              <IconButton
+                aria-label="delete menu"
+                icon={<FaTrashAlt/>}
+                isRound
+                onClick={() => deleteMenu(menu)}
+              />
             </HStack>
           ))
         }
       </VStack>
-      <form onSubmit={handleClick}>
+      <AddMenu/>
+      <div>
         <HStack mt="8">
-          <Input variant="filled" placeholder="learning chakraui with todo app"/>
-          <Button colorScheme="pink" px="8" type="submit">追加</Button>
+          <Input ref={inputEl} variant="filled" placeholder="learning chakraui with todo app"/>
+          <Button onClick={handleClick} colorScheme="pink" px="8" type="submit">追加</Button>
         </HStack>
-      </form>
-      <input ref={inputEl} type="text" />
-      <Button onClick={handleClick}>追加</Button>
+      </div>
       <div className="my-2">
         <Link className="btn btn-secondary" to="/">Back</Link>
       </div>
