@@ -1,4 +1,4 @@
-import { Button, HStack, Input } from '@chakra-ui/react';
+import { Button, HStack, Input, useToast } from '@chakra-ui/react';
 import React, { useRef } from 'react'
 
 type Props = {
@@ -7,9 +7,18 @@ type Props = {
 
 function AddMenu({ addMenu }: Props) {
   const inputEl = useRef<HTMLInputElement>(null);
-  const handleClick = () => {
+  const toast = useToast();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const menu = inputEl.current?.value
-    if (menu === undefined) {
+    if (!menu) {
+      toast({
+        title: 'No content',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
       return
     }
     addMenu(menu)
@@ -19,12 +28,12 @@ function AddMenu({ addMenu }: Props) {
   }
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <HStack mt="8">
         <Input ref={inputEl} variant="filled" placeholder="learning chakraui with todo app"/>
-        <Button onClick={handleClick} colorScheme="pink" px="8" type="submit">追加</Button>
+        <Button colorScheme="pink" px="8" type="submit">追加</Button>
       </HStack>
-    </div>
+    </form>
   )
 }
 
