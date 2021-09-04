@@ -6,30 +6,8 @@ import useDocumentSubscription from "../hooks/useDocumentSubscription";
 import { VStack, Heading, } from "@chakra-ui/react";
 import MenuList from '../components/MenuList';
 import AddMenu from '../components/AddMenu';
-import { collection, doc, DocumentReference, updateDoc } from "firebase/firestore";
-
-interface IRoutine {
-  id: string;
-  ref: DocumentReference | null;
-  menus: string[];
-};
-class Routine implements IRoutine {
-  id: string = '';
-  ref: DocumentReference | null = null;
-  menus = [];
-
-  constructor({
-    id = '',
-    ref = null,
-    menus = [],
-  }: Partial<IRoutine>) {
-    Object.assign(this, {
-      id,
-      ref,
-      menus,
-    });
-  }
-}
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { Routine } from "../models/routine";
 
 export const EditRoutine: React.FC = () => {
   const { routineId }: any = useParams();
