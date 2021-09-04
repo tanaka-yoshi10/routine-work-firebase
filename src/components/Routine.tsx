@@ -4,6 +4,7 @@ import { firestore, Timestamp, User } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
 type Props = {
   routine: any;
@@ -52,26 +53,26 @@ export default function Routine(props: Props) {
   return (
     <div>
       <Link to={`/routines/${routine.id}/edit`}>{routine.title}</Link>
-      <table className="table table-bordered">
-        <thead>
-        <tr>
-          <th style={{ width: 200 }}>メニュー</th>
+      <Table variant="simple">
+        <Thead>
+        <Tr>
+          <Th w={200}>メニュー</Th>
           {
             dates.map((date, index) => {
               const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
               return (
-                <th key={index} style={style}>{date.toFormat('MM/dd')}</th>
+                <Th key={index} style={style}>{date.toFormat('MM/dd')}</Th>
               )
             })
           }
-        </tr>
-        </thead>
-        <tbody>
+        </Tr>
+        </Thead>
+        <Tbody>
         {
           routine.menus.map((menu: string, index: number) => {
             return (
-              <tr key={index}>
-                <td>{menu}</td>
+              <Tr key={index}>
+                <Td>{menu}</Td>
                 {
                   dates.map((date, index) => {
                     const mark = histories.some((history:any) => {
@@ -86,18 +87,18 @@ export default function Routine(props: Props) {
                     const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
                     const isToday = date.toSeconds() === today.toSeconds();
                     return (
-                      <td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
+                      <Td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
                         mark ? (<FontAwesomeIcon icon={faCheck} />) : ''
-                      }</td>
+                      }</Td>
                     )
                   })
                 }
-              </tr>
+              </Tr>
             );
           })
         }
-        </tbody>
-      </table>
+        </Tbody>
+      </Table>
     </div>
   )
 }
