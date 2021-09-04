@@ -3,24 +3,19 @@ import { firestore } from "../firebase";
 
 import { Link, useParams } from "react-router-dom";
 import useDocumentSubscription from "../hooks/useDocumentSubscription";
-import { VStack, Button, Heading, HStack, Input } from "@chakra-ui/react";
+import { VStack, Heading, } from "@chakra-ui/react";
 import MenuList from '../components/MenuList';
 import AddMenu from '../components/AddMenu';
 
 export const EditRoutine: React.FC = () => {
-  const inputEl = useRef<HTMLInputElement>(null);
   const { routineId }: any = useParams();
   const routineRef = firestore.collection('routines').doc(routineId);
   const routine = useDocumentSubscription(routineRef);
   const { menus }:any = routine || { menus: [] };
 
-  const handleClick = useCallback(()=>{
-    const menu = inputEl.current?.value
+  const addMenu = useCallback((menu: string)=>{
     routineRef.update({ menus: [...menus, menu] });
-    if (inputEl.current) {
-      inputEl.current.value = ''
-    }
-  },[menus])
+  }, [menus])
 
   const deleteMenu = (menu: string) => {
     if (!window.confirm('Are you sure?')) {
@@ -65,13 +60,7 @@ export const EditRoutine: React.FC = () => {
        upMenu={upMenu}
        downMenu={downMenu}
       />
-      <AddMenu/>
-      <div>
-        <HStack mt="8">
-          <Input ref={inputEl} variant="filled" placeholder="learning chakraui with todo app"/>
-          <Button onClick={handleClick} colorScheme="pink" px="8" type="submit">追加</Button>
-        </HStack>
-      </div>
+      <AddMenu addMenu={addMenu}/>
       <div className="my-2">
         <Link className="btn btn-secondary" to="/">Back</Link>
       </div>
