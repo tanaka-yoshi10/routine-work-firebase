@@ -1,5 +1,4 @@
 import React from 'react';
-import { ChakraProvider } from "@chakra-ui/react"
 import './App.css';
 import { auth } from './firebase';
 import { useState, useEffect } from 'react';
@@ -16,14 +15,14 @@ function App() {
   }, []);
 
   return (
-    <ChakraProvider>
+    <div>
       <header>
         <Header user={user}/>
       </header>
       <div className="container">
         {user ? (<Dashboard user={user}/>) : null }
       </div>
-    </ChakraProvider>
+    </div>
   );
 }
 
