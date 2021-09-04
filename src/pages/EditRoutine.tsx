@@ -3,10 +3,7 @@ import { firestore } from "../firebase";
 
 import { Link, useParams } from "react-router-dom";
 import useDocumentSubscription from "../hooks/useDocumentSubscription";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faArrowDown, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FaTrashAlt } from 'react-icons/fa'
-import { VStack, Button, Heading, IconButton, HStack, Text, StackDivider, Spacer, Input } from "@chakra-ui/react";
+import { VStack, Button, Heading, HStack, Input } from "@chakra-ui/react";
 import MenuList from '../components/MenuList';
 import AddMenu from '../components/AddMenu';
 
@@ -62,38 +59,12 @@ export const EditRoutine: React.FC = () => {
       >
         Edit Routine
       </Heading>
-      <MenuList menus={menus} deleteMenu={deleteMenu}/>
-      <VStack
-        divider={<StackDivider />}
-        borderColor="gray.100"
-        borderWidth="2px"
-        p="4"
-        borderradus="lg"
-        w="100%"
-        maxW={{base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw'}}
-        alignItems="stretch"
-      >
-        {
-          menus.map((menu:string, index:number) => (
-            <HStack key={index}>
-              <button className="btn" onClick={() => upMenu(index)}>
-                <FontAwesomeIcon icon={faArrowUp} />
-              </button>
-              <button className="btn" onClick={() => downMenu(index)}>
-                <FontAwesomeIcon icon={faArrowDown} />
-              </button>
-              <Text>{menu}</Text>
-              <Spacer />
-              <IconButton
-                aria-label="delete menu"
-                icon={<FaTrashAlt/>}
-                isRound
-                onClick={() => deleteMenu(menu)}
-              />
-            </HStack>
-          ))
-        }
-      </VStack>
+      <MenuList
+       menus={menus}
+       deleteMenu={deleteMenu}
+       upMenu={upMenu}
+       downMenu={downMenu}
+      />
       <AddMenu/>
       <div>
         <HStack mt="8">
