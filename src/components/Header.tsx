@@ -1,7 +1,21 @@
-import { Box, Button, Flex, IconButton, Spacer } from "@chakra-ui/react";
-import React from "react";
+import React from 'react';
+import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
+import { auth, provider, User } from "../firebase";
 
-export default function Header() {
+type Props = {
+  user: User;
+};
+
+export default function Header(props: Props) {
+  const { user } = props;
+  const login = () => {
+    auth.signInWithRedirect(provider);
+  };
+
+  const logout = () => {
+    auth.signOut();
+  };
+
   return (
     <Flex bg="gray.100" w="100vw" h="20">
       <Flex
@@ -15,9 +29,13 @@ export default function Header() {
       >
         <Spacer />
         <Box>
-          <Button disabled colorScheme="blue">
-            保存済み
-          </Button>
+          {user ? (
+            <div>
+              <Button onClick={logout}>Google Logout</Button>
+            </div>
+          ) : (
+            <Button onClick={login}>Google Login</Button>
+          )}
         </Box>
       </Flex>
     </Flex>
