@@ -6,9 +6,9 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 type Props = {
   menus: Array<any>,
-  deleteMenu: any,
-  upMenu: any,
-  downMenu: any,
+  deleteMenu: (menu: string) => void,
+  upMenu: (index: number) => void,
+  downMenu: (index: number) => void,
 };
 
 function MenuList(props: Props) {
