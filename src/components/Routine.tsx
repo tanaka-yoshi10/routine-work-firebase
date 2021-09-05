@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { firestore } from "../firebase";
 import { CheckIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Heading, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { addDoc, collection, endAt, onSnapshot, orderBy, query, startAt, Timestamp, where } from "firebase/firestore";
 import { User } from "firebase/auth";
 
@@ -52,8 +52,18 @@ export default function Routine(props: Props) {
 
   return (
     <div>
-      <Link to={`/routines/${routine.id}/edit`}>{routine.title}</Link>
-      <Table variant="simple">
+      <Heading
+        mt="4"
+        mb="4"
+        fontWeight="extrabold"
+        fontSize="3xl"
+        bgGradient="linear(to-r, pink.500, pink.300, blue.500)"
+        bgClip="text"
+        textAlign="center"
+      >
+        <Link to={`/routines/${routine.id}/edit`}>{routine.title}</Link>
+      </Heading>
+      <Table variant="simple" mb="8">
         <Thead>
         <Tr>
           <Th w={200}>メニュー</Th>
