@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import { auth } from './firebase';
 import { useState, useEffect } from 'react';

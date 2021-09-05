@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import { auth, provider } from "../firebase";
 import { signInWithRedirect, User } from 'firebase/auth';

@@ -1,5 +1,4 @@
 import { VStack, Badge, StackDivider, HStack, IconButton, Spacer, Text } from '@chakra-ui/react'
-import React from 'react'
 import { FaTrashAlt, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 type Props = {

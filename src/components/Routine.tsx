@@ -1,5 +1,5 @@
-import {DateTime} from "luxon";
-import React, {useEffect, useState} from "react";
+import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
 import { firestore } from "../firebase";
 import { CheckIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";

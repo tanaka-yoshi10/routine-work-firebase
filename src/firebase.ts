@@ -1,9 +1,3 @@
-// import firebase from 'firebase/app';
-// import 'firebase/firestore';
-// import 'firebase/database';
-// import 'firebase/storage';
-// import 'firebase/auth';
-// import 'firebase/functions';
 import { initializeApp } from "firebase/app"
 import { getFirestore, Firestore } from "firebase/firestore";
 
@@ -45,10 +39,5 @@ if (env('FIRESTORE_EMULATOR') === 'true') {
 }
 
 export const auth = getAuth(firebaseApp);
-// TODO: エミュレータによる分岐を入れる
 export const database = firestore;
-// export const storage = firebase.storage();
-// export const EmailAuthProvider = firebase.auth.EmailAuthProvider;
-// export const FieldValue = firebase.firestore.FieldValue;
 export const provider = new GoogleAuthProvider();
-// export type User = firebase.User;
