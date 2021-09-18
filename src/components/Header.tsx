@@ -17,9 +17,10 @@ export default function Header(props: Props) {
   };
 
   return (
-    <Flex bg="gray.100" w="100vw" h="20">
+    <Flex w="100vw" h="20">
       <Flex
         as="header"
+        bg="gray.100"
         position="fixed"
         top={0}
         width="full"
