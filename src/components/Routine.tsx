@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { firestore } from "../firebase";
 import { CheckIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
-import { Heading, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Heading, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { addDoc, collection, endAt, onSnapshot, orderBy, query, startAt, Timestamp, where } from "firebase/firestore";
 import { User } from "firebase/auth";
 
@@ -50,8 +50,12 @@ export default function Routine(props: Props) {
     return unsubscribe;
   }, []);
 
+  const menuWidth = 200
+  const tdWidth = 50
+  const tdPadding = 0
+
   return (
-    <div>
+    <Box maxWidth={500} margin='auto'>
       <Heading
         mt="4"
         mb="4"
@@ -66,12 +70,20 @@ export default function Routine(props: Props) {
       <Table variant="simple" mb="8">
         <Thead>
         <Tr>
-          <Th w={200}>メニュー</Th>
+          <Th
+            width={menuWidth}
+          >メニュー</Th>
           {
             dates.map((date, index) => {
               const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
               return (
-                <Th key={index} style={style}>{date.toFormat('MM/dd')}</Th>
+                <Th
+                  key={index}
+                  style={style}
+                  textAlign="center"
+                  width={tdWidth}
+                  p={tdPadding}
+                >{date.toFormat('MM/dd')}</Th>
               )
             })
           }
@@ -95,7 +107,14 @@ export default function Routine(props: Props) {
                     const style = date.toSeconds() === today.toSeconds() ? { background: '#d1e3f7' } : {}
                     const isToday = date.toSeconds() === today.toSeconds();
                     return (
-                      <Td key={index} style={style} onClick={() => onClick(date, menu, isToday, mark)}>{
+                      <Td
+                        textAlign="center"
+                        width={tdWidth}
+                        p={tdPadding}
+                        key={index}
+                        style={style}
+                        onClick={() => onClick(date, menu, isToday, mark)}
+                      >{
                         mark ? (<CheckIcon />) : ''
                       }</Td>
                     )
@@ -107,6 +126,6 @@ export default function Routine(props: Props) {
         }
         </Tbody>
       </Table>
-    </div>
+    </Box>
   )
 }
