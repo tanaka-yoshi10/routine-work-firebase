@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, IconButton, Spacer } from "@chakra-ui/react";
+import { AiOutlineReload } from "react-icons/ai";
 import { auth, provider } from "../firebase";
 import { signInWithRedirect, User } from 'firebase/auth';
 
@@ -16,6 +17,10 @@ export default function Header(props: Props) {
     auth.signOut();
   };
 
+  const reload = () => {
+    window.location.reload();
+  };
+
   return (
     <Flex w="100vw" h="20">
       <Flex
@@ -30,13 +35,21 @@ export default function Header(props: Props) {
       >
         <Spacer />
         <Box>
-          {user ? (
-            <div>
-              <Button onClick={logout}>Google Logout</Button>
-            </div>
-          ) : (
-            <Button onClick={login}>Google Login</Button>
-          )}
+          <HStack>
+            <IconButton
+              aria-label="delete menu"
+              icon={<AiOutlineReload/>}
+              isRound
+              onClick={reload}
+            />
+            {user ? (
+              <div>
+                <Button onClick={logout}>Google Logout</Button>
+              </div>
+            ) : (
+              <Button onClick={login}>Google Login</Button>
+            )}
+          </HStack>
         </Box>
       </Flex>
     </Flex>
