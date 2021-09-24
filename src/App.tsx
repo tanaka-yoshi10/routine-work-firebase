@@ -2,7 +2,6 @@ import './App.css';
 import { auth } from './firebase';
 import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
-import Header from './components/Header';
 
 function App() {
   const [user, setUser] = useState<any | null>(null);
@@ -15,12 +14,7 @@ function App() {
 
   return (
     <div>
-      <header>
-        <Header user={user}/>
-      </header>
-      <div className="container">
-        {user ? (<Dashboard user={user}/>) : null }
-      </div>
+      <Dashboard user={user}/>
     </div>
   );
 }
