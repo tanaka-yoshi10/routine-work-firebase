@@ -1,5 +1,6 @@
 import { Box, Button, Flex, HStack, IconButton, Spacer } from "@chakra-ui/react";
 import { AiOutlineReload } from "react-icons/ai";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { auth, provider } from "../firebase";
 import { signInWithRedirect, User } from 'firebase/auth';
 
@@ -37,17 +38,25 @@ export default function Header(props: Props) {
         <Box>
           <HStack>
             <IconButton
-              aria-label="delete menu"
+              aria-label="reload"
               icon={<AiOutlineReload/>}
               isRound
               onClick={reload}
             />
             {user ? (
-              <div>
-                <Button onClick={logout}>Google Logout</Button>
-              </div>
+              <IconButton
+                aria-label="logout"
+                icon={<FaSignOutAlt/>}
+                isRound
+                onClick={logout}
+              />
             ) : (
-              <Button onClick={login}>Google Login</Button>
+              <IconButton
+                aria-label="login"
+                icon={<FaSignInAlt/>}
+                isRound
+                onClick={login}
+              />
             )}
           </HStack>
         </Box>
