@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { ChakraProvider } from "@chakra-ui/react"
 import Header from './Header';
+import Login from '../pages/Login'
 
 import routes from '../routes';
 const history = createBrowserHistory();
@@ -30,7 +31,7 @@ function Root() {
         <Header user={user}/>
       </header>
       <div className="container">
-        {user ? router : null }
+        {user ? router : (<Login/>) }
       </div>
     </ChakraProvider>
   )
