@@ -1,3 +1,4 @@
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import { addDoc, collection } from '@firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -7,7 +8,7 @@ type Inputs = {
   title: string,
 }
 function NewRoutine() {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Inputs>();
   const [user, setUser] = useState<any | null>(null);
 
   useEffect(() => {
@@ -29,10 +30,24 @@ function NewRoutine() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Title</label>
-        <input {...register('title', { required: true })} />
-        {errors.title && <span>This field is required</span>}
-        <input type="submit" />
+        <FormControl isInvalid={!!errors.title}>
+          <FormLabel htmlFor="title">First name</FormLabel>
+          <Input
+            id="title"
+            placeholder="title"
+            {...register("title", {
+              required: "This is required",
+              minLength: { value: 4, message: "Minimum length should be 4" }
+            })}
+          />
+          <FormErrorMessage>
+            {errors.title && errors.title.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+          Add
+        </Button>
       </form>
     </div>
   )
