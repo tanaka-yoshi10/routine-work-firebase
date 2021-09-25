@@ -3,6 +3,7 @@ import { firestore } from "../firebase";
 import Routine from '../components/Routine';
 import { User } from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
+import { Link } from "@chakra-ui/react";
 
 type Props = {
   user: User;
@@ -27,6 +28,9 @@ export default function Dashboard(props: Props) {
           return (<Routine key={routine.id} routine={routine} user={user}/>);
         })
       }
+      <Link to='/routines/new'>
+        new routine
+      </Link>
     </div>
   )
 }
