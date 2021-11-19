@@ -15,7 +15,7 @@ type Props = {
 export default function Routine(props: Props) {
   const { routine, user } = props;
   const today = DateTime.local().startOf('day')
-  const dates = [...Array(7)].map((_, i) => today.plus({ days: i - 3 }).startOf('day'))
+  const dates = [...Array(7)].map((_, i) => today.plus({ days: i - 6 }).startOf('day'))
 
   const [histories, setHistories] = useState([]);
 
